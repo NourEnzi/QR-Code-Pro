@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-55PRQZF3');</script>
+    <title>المولد الاحترافي لرموز QR Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="أداة احترافية ومجانية لإنشاء رموز الاستجابة السريعة QR Code للنصوص، الروابط، شبكات الواي فاي، جهات الاتصال، ورسائل الواتساب مع إمكانية التخصيص.">
+    <meta name="author" content="Nour Eddin Alsawalmeh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://unpkg.com/easyqrcodejs/dist/easy.qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* المتغيرات الأساسية (الوضع النهاري) */
+        :root { 
+            --bg-main: #f4f7f6; 
+            --calc-bg: #fff; 
+            --text-main: #333;
+            --text-muted: #7f8c8d;
+            --border-col: #bdc3c7;
+            --title-color: #2c3e50;
+            --input-bg: #fff;
+            --btn-bg: #2c3e50;
+            --btn-hover: #34495e;
+            --law-col-bg: #f9f9f9;
+            --info-header-bg: #ecf0f1;
+            --success-text: #27ae60;
+            --warning-text: #e67e22;
+            --danger-text: #e74c3c;
+            --disclaimer-bg: #fff3cd;
+            --disclaimer-border: #ffeeba;
+            --disclaimer-text: #856404;
+        }
+
+        /* المتغيرات (الوضع الليلي) */
+        body.dark-mode {
+            --bg-main: #121212;
+            --calc-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #bdc3c7;
+            --border-col: #444;
+            --title-color: #f1f1f1;
+            --input-bg: #2c2c2c;
+            --btn-bg: #3498db;
+            --btn-hover: #2980b9;
+            --law-col-bg: #2a2a2a;
+            --info-header-bg: #2a2a2a;
+            --disclaimer-bg: #332b00;
+            --disclaimer-border: #665500;
+            --disclaimer-text: #ffd700;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main); 
+            margin: 0; padding: 20px;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; box-sizing: border-box;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .calculator-section {
+            background-color: var(--calc-bg); padding: 35px; border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 850px;
+            margin-top: 20px; box-sizing: border-box; position: relative;
+            transition: background-color 0.4s ease;
+        }
+
+        h2 { color: var(--title-color); text-align: center; margin-bottom: 25px; line-height: 1.4; font-size: 24px; transition: color 0.4s ease; }
+        
+        .disclaimer-box { background-color: var(--disclaimer-bg); border: 1px solid var(--disclaimer-border); color: var(--disclaimer-text); padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 14.5px; line-height: 1.6; display: flex; align-items: flex-start; gap: 12px; transition: all 0.4s ease; }
+        .disclaimer-box i { font-size: 22px; margin-top: 3px; }
+
+        /* تبويبات أنواع الـ QR */
+        .tabs-container { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .tab-btn { flex: 1; min-width: 120px; padding: 12px; background-color: var(--info-header-bg); color: var(--text-main); border: 1px solid var(--border-col); border-radius: 5px; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .tab-btn.active { background-color: #3498db; color: white; border-color: #3498db; }
+        .tab-btn:hover:not(.active) { background-color: var(--border-col); }
+
+        .form-row { display: flex; gap: 20px; margin-bottom: 18px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 220px; position: relative; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--title-color); font-size: 15px; transition: color 0.4s ease; }
+        
+        input[type="text"], input[type="url"], input[type="tel"], input[type="email"], textarea, select, input[type="color"] { width: 100%; padding: 12px; border: 1px solid var(--border-col); border-radius: 5px; box-sizing: border-box; font-size: 16px; font-family: inherit; background-color: var(--input-bg); color: var(--text-main); transition: all 0.3s ease; }
+        input:focus, textarea:focus, select:focus { border-color: #3498db; outline: none; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); }
+        input[type="color"] { padding: 5px; height: 50px; cursor: pointer; }
+        
+        .input-section { display: none; }
+        .input-section.active { display: block; }
+
+        /* تنسيق عداد الأحرف والنصيحة الديناميكية */
+        .char-counter-container {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 8px; font-size: 13px; font-weight: 600;
+            padding: 8px 12px; border-radius: 5px; background-color: var(--info-header-bg);
+            transition: all 0.3s ease; border: 1px solid var(--border-col);
+        }
+        #char_advice { line-height: 1.4; }
+
+        .customization-box { background-color: var(--law-col-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-col); margin-top: 20px; margin-bottom: 20px; transition: all 0.4s ease; }
+        .customization-box h3 { margin-top: 0; color: #2980b9; font-size: 17px; border-bottom: 2px solid var(--border-col); padding-bottom: 10px; }
+
+        .calc-btn { width: 100%; padding: 15px; background-color: var(--btn-bg); color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background-color 0.3s ease, transform 0.1s ease; font-family: inherit;}
+        .calc-btn:hover { background-color: var(--btn-hover); }
+        .calc-btn:active { transform: scale(0.98); }
+
+        /* منطقة النتائج والتنزيل */
+        .result-section { margin-top: 30px; display: none; text-align: center; }
+        .qr-display-box { background-color: white; padding: 20px; border-radius: 10px; display: inline-block; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .download-group { display: flex; gap: 0; margin-bottom: 15px; width: 100%; }
+        .download-group select { border-radius: 5px 0 0 5px; border-left: none; width: 30%; background-color: var(--info-header-bg); font-weight: bold; cursor: pointer; }
+        .download-btn { width: 70%; padding: 15px; background-color: #27ae60; color: white; border: none; border-radius: 0 5px 5px 0; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; font-family: inherit;}
+        .download-btn:hover { background-color: #219150; }
+
+        .print-btn { background-color: #2c3e50; margin-top: 10px; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; font-family: inherit;}
+        .print-btn:hover { background-color: #34495e; }
+        
+        .share-wa-btn { background-color: #25d366; margin-top: 10px; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px; text-decoration: none; box-sizing: border-box; font-family: inherit;}
+        .share-wa-btn:hover { background-color: #128c7e; color: white; }
+
+        /* قسم السجل */
+        .history-section { margin-top: 30px; border-top: 2px dashed var(--border-col); padding-top: 20px; display: none; }
+        .history-section h3 { color: var(--title-color); }
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; }
+        .history-item { cursor: pointer; border: 1px solid var(--border-col); border-radius: 5px; overflow: hidden; background: white; padding: 5px; transition: transform 0.2s; }
+        .history-item:hover { transform: scale(1.05); border-color: #3498db; }
+        .history-item img { width: 100%; height: auto; display: block; }
+
+        /* الفوتر والأسئلة الشائعة */
+        .faq-accordion { margin-top: 30px; width: 100%; max-width: 850px; text-align: right; }
+        .faq-accordion h2 { color: var(--title-color); border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 20px; font-size: 22px; }
+        .accordion-item { border: 1px solid var(--border-col); border-radius: 8px; margin-bottom: 10px; overflow: hidden; background-color: var(--calc-bg); transition: background-color 0.4s ease, border-color 0.4s ease; }
+        .accordion-btn { width: 100%; text-align: right; padding: 18px 20px; font-size: 16px; font-weight: bold; color: var(--title-color); background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease, color 0.4s ease; font-family: inherit; outline: none; }
+        .accordion-btn:hover { background-color: var(--info-header-bg); }
+        .accordion-icon { transition: transform 0.3s ease; color: #3498db; }
+        .accordion-btn.active .accordion-icon { transform: rotate(180deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background-color: var(--calc-bg); }
+        .accordion-content p { margin: 0; padding: 0 20px 20px 20px; color: var(--text-main); line-height: 1.7; font-size: 15px; }
+
+        .copyright-footer { margin-top: 30px; margin-bottom: 20px; text-align: center; font-size: 14px; color: var(--text-muted); font-weight: bold; width: 100%; max-width: 850px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: color 0.4s ease; }
+        .copyright-footer p { margin: 0; }
+        .social-links { display: flex; gap: 18px; margin-top: 5px; }
+        .social-links a { color: var(--text-muted); font-size: 24px; transition: color 0.3s ease, transform 0.2s ease; }
+        .social-links a:hover { color: var(--title-color); transform: translateY(-3px); }
+
+        /* القائمة العائمة */
+        .floating-action-menu { position: fixed; bottom: 25px; left: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+        .floating-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; color: white; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; text-decoration: none; }
+        .floating-btn:hover { transform: scale(1.1); }
+        .floating-btn i { pointer-events: none; }
+        .dark-mode-float { background-color: #2c3e50; }
+        .dark-mode-float:hover { background-color: #1a252f; }
+        body.dark-mode .dark-mode-float { background-color: #444; color: #f1c40f; }
+        .install-float { background-color: #3498db; display: flex; }
+        .install-float:hover { background-color: #2980b9; }
+        .share-float { background-color: #9b59b6; }
+        .share-float:hover { background-color: #8e44ad; }
+
+        @media (max-width: 768px) { 
+            .calculator-section { padding: 20px; } 
+            .floating-action-menu { bottom: 20px; left: 20px; gap: 12px; }
+            .floating-btn { width: 50px; height: 50px; font-size: 22px; }
+            .download-group { flex-direction: column; }
+            .download-group select, .download-btn { width: 100%; border-radius: 5px; margin-bottom: 5px; }
+            .char-counter-container { flex-direction: column; align-items: flex-start; gap: 8px; }
+        }
+        
+        @media print {
+            body { background-color: #fff !important; color: #000 !important; padding: 0; }
+            .calculator-section { box-shadow: none; padding: 0; }
+            .tabs-container, .disclaimer-box, .customization-box, .form-row, .calc-btn, .print-btn, .share-wa-btn, .download-group, .history-section, .copyright-footer, .faq-accordion, .floating-action-menu, .char-counter-container { display: none !important; }
+            .result-section { display: block !important; margin-top: 0; }
+            .qr-display-box { box-shadow: none; border: 2px solid #000; }
+        }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55PRQZF3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <main class="calculator-section">
+        <h2>المولد الاحترافي لرموز QR Code</h2>
+        
+        <div class="disclaimer-box">
+            <i class="fa-solid fa-qrcode"></i>
+            <div><strong>تنويه:</strong> جميع البيانات التي تقوم بإدخالها ومعالجتها تتم مباشرة داخل متصفحك (جهازك الخاص). نحن لا نقوم بحفظ أو إرسال أي نصوص أو معلومات خاصة بك إلى أي خوادم خارجية لضمان خصوصيتك الكاملة.</div>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" data-target="section_text" id="tab_btn_text"><i class="fa-solid fa-file-lines"></i> نص / رابط</button>
+            <button class="tab-btn" data-target="section_wifi" id="tab_btn_wifi"><i class="fa-solid fa-wifi"></i> شبكة Wi-Fi</button>
+            <button class="tab-btn" data-target="section_vcard" id="tab_btn_vcard"><i class="fa-solid fa-address-card"></i> جهة اتصال</button>
+            <button class="tab-btn" data-target="section_whatsapp" id="tab_btn_whatsapp"><i class="fa-brands fa-whatsapp"></i> واتساب</button>
+        </div>
+
+        <div id="section_text" class="input-section active">
+            <div class="form-group">
+                <label for="input_qr_text">أدخل النص أو الفقرة التعريفية هنا:</label>
+                <textarea id="input_qr_text" rows="4" placeholder="مثال: تعريف عن مادة الحديد، أو ضع رابطاً مباشراً..."></textarea>
+                
+                <div class="char-counter-container" id="char_counter_hint">
+                    <span id="char_count">عدد الأحرف: 0</span>
+                    <span id="char_advice">ابدأ الكتابة للحصول على نصيحة الأداء واختيار الدقة...</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="section_wifi" class="input-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="wifi_ssid">اسم الشبكة (SSID):</label>
+                    <input type="text" id="wifi_ssid" placeholder="اسم شبكة الواي فاي">
+                </div>
+                <div class="form-group">
+                    <label for="wifi_password">كلمة المرور:</label>
+                    <input type="text" id="wifi_password" placeholder="كلمة المرور">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="wifi_type">نوع التشفير:</label>
+                <select id="wifi_type">
+                    <option value="WPA">WPA/WPA2</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">بدون كلمة مرور</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="section_vcard" class="input-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="vcard_name">الاسم الكامل:</label>
+                    <input type="text" id="vcard_name" placeholder="مثال: نورالدين السوالمه">
+                </div>
+                <div class="form-group">
+                    <label for="vcard_phone">رقم الهاتف:</label>
+                    <input type="tel" id="vcard_phone" placeholder="مثال: +962700000000">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="vcard_email">البريد الإلكتروني (اختياري):</label>
+                <input type="email" id="vcard_email" placeholder="example@email.com">
+            </div>
+        </div>
+
+        <div id="section_whatsapp" class="input-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="wa_number">رقم الهاتف (مع رمز الدولة):</label>
+                    <input type="tel" id="wa_number" placeholder="مثال: 962700000000">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="wa_message">الرسالة الافتراضية (اختياري):</label>
+                <textarea id="wa_message" rows="2" placeholder="مرحباً، أود الاستفسار عن..."></textarea>
+            </div>
+        </div>
+
+        <div class="customization-box">
+            <h3>🎨 خيارات التخصيص (اختياري)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="color_dark">لون الكود (النقاط):</label>
+                    <input type="color" id="color_dark" value="#000000">
+                </div>
+                <div class="form-group">
+                    <label for="color_light">لون الخلفية:</label>
+                    <input type="color" id="color_light" value="#ffffff">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="qr_ec_level">دقة تصحيح الأخطاء (تتغير تلقائياً مع النص):</label>
+                    <select id="qr_ec_level">
+                        <option value="L">منخفض (L) - الأفضل للنصوص الطويلة</option>
+                        <option value="M">متوسط (M) - قياسي</option>
+                        <option value="Q">عالي (Q) - جيد لطباعة الملابس</option>
+                        <option value="H" selected>أقصى (H) - الأفضل عند إضافة شعار</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="qr_logo_upload">رفع شعار (Logo) في المنتصف:</label>
+                    <input type="file" id="qr_logo_upload" accept="image/png, image/jpeg, image/webp" style="padding: 9px;">
+                </div>
+            </div>
+        </div>
+        
+        <button id="btn_generate_qr" class="calc-btn">🚀 إنشاء QR Code</button>
+
+        <div class="result-section" id="resultBox">
+            <div class="qr-display-box" id="qrcode_container">
+                </div>
+            
+            <div class="download-group">
+                <select id="select_qr_format">
+                    <option value="png">صيغة PNG (عالية الجودة)</option>
+                    <option value="jpeg">صيغة JPEG (صورة عادية)</option>
+                    <option value="webp">صيغة WEBP (خفيفة للويب)</option>
+                    <option value="pdf">صيغة PDF (للطباعة)</option>
+                </select>
+                <button id="btn_download_qr" class="download-btn"><i class="fa-solid fa-download"></i> تحميل الـ QR Code</button>
+            </div>
+            
+            <button id="btn_share_qr_whatsapp" class="share-wa-btn"><i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i> مشاركة الصورة عبر واتساب</button>
+            <button id="btn_print_qr" class="print-btn"><i class="fa-solid fa-print"></i> طباعة الرمز مباشرة</button>
+        </div>
+
+        <div class="history-section" id="historySection">
+            <h3>🕒 آخر الرموز التي قمت بإنشائها (مخزنة في جهازك)</h3>
+            <div class="history-grid" id="historyGrid"></div>
+        </div>
+    </main>
+
+    <div class="faq-accordion">
+        <h2>أسئلة شائعة حول الـ QR Code</h2>
+        <div class="accordion-item">
+            <button class="accordion-btn">هل رموز الـ QR التي أنشئها تنتهي صلاحيتها؟ <i class="fa-solid fa-chevron-down accordion-icon"></i></button>
+            <div class="accordion-content"><p>لا، الرموز التي يتم إنشاؤها عبر هذا التطبيق هي رموز "ثابتة" (Static QR Codes). هذا يعني أن البيانات مشفرة مباشرة داخل الصورة نفسها ولا تعتمد على أي خوادم خارجية، وبالتالي ستعمل مدى الحياة ولن تنتهي صلاحيتها أبداً طالما أن الرابط أو النص الذي أدخلته لا يزال فعالاً.</p></div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-btn">ما هو مستوى تصحيح الأخطاء (Error Correction)؟ <i class="fa-solid fa-chevron-down accordion-icon"></i></button>
+            <div class="accordion-content"><p>هي تقنية تسمح لقارئ الـ QR Code بقراءة الرمز حتى لو كان جزء منه تالفاً أو مغطى. التطبيق يقوم بتعديل هذا المستوى تلقائياً بناءً على طول النص لضمان أفضل سرعة قراءة. المستوى (H) هو الأفضل إذا كنت تنوي وضع شعار (Logo) في منتصف الرمز لضمان استمرار عمله بكفاءة.</p></div>
+        </div>
+    </div>
+
+    <div class="copyright-footer">
+        <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.3</span></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
+            <a href="mailto:NOUR.AL3NEZI@HOTMAIL.COM" title="راسلني عبر البريد الإلكتروني"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+
+    <div class="floating-action-menu">
+        <button id="btn_toggle_darkmode" class="floating-btn dark-mode-float" title="تبديل الوضع الليلي">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+        
+        <button id="btn_install_app" class="floating-btn install-float" title="تنزيل التطبيق على الهاتف">
+            <i class="fa-solid fa-download"></i>
+        </button>
+
+        <button id="btn_share_app" class="floating-btn share-float" title="شارك التطبيق مع أصدقائك">
+            <i class="fa-solid fa-share-nodes"></i>
+        </button>
+    </div>
+
+    <script>
+        // --- 1. التبديل بين التبويبات (النص، الواي فاي، الواتساب) ---
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const sections = document.querySelectorAll(".input-section");
+        let currentActiveType = "section_text";
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                tabBtns.forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+                
+                sections.forEach(sec => sec.classList.remove("active"));
+                const targetId = this.getAttribute("data-target");
+                document.getElementById(targetId).classList.add("active");
+                currentActiveType = targetId;
+            });
+        });
+
+        // --- 2. عداد الأحرف والنصيحة الديناميكية ---
+        const qrInput = document.getElementById("input_qr_text");
+        const charCountDisplay = document.getElementById("char_count");
+        const charAdviceDisplay = document.getElementById("char_advice");
+        const ecSelect = document.getElementById("qr_ec_level");
+
+        qrInput.addEventListener("input", function() {
+            const length = this.value.length;
+            charCountDisplay.innerText = `عدد الأحرف: ${length}`;
+            
+            if (length === 0) {
+                charAdviceDisplay.innerText = "ابدأ الكتابة للحصول على نصيحة الأداء واختيار الدقة...";
+                charAdviceDisplay.style.color = "inherit";
+            } else if (length <= 100) {
+                charAdviceDisplay.innerHTML = "🟢 سرعة مسح فائقة. <b>ينصح بـ: أقصى (H)</b>";
+                charAdviceDisplay.style.color = "var(--success-text)";
+                ecSelect.value = "H";
+            } else if (length <= 300) {
+                charAdviceDisplay.innerHTML = "🟡 سرعة مسح جيدة جداً. <b>ينصح بـ: متوسط (M)</b>";
+                charAdviceDisplay.style.color = "#8e8e00"; 
+                ecSelect.value = "M";
+            } else if (length <= 600) {
+                charAdviceDisplay.innerHTML = "🟠 الرمز مزدحم. <b>ينصح بـ: منخفض (L)</b>";
+                charAdviceDisplay.style.color = "var(--warning-text)";
+                ecSelect.value = "L";
+            } else {
+                charAdviceDisplay.innerHTML = "🔴 تحذير: ثقيل جداً وقد يصعب مسحه. <b>إجباري: منخفض (L)</b>";
+                charAdviceDisplay.style.color = "var(--danger-text)";
+                ecSelect.value = "L";
+            }
+        });
+
+        // --- 3. تبديل الوضع الليلي ---
+        document.getElementById("btn_toggle_darkmode").addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
+            let icon = this.querySelector("i");
+            if(document.body.classList.contains("dark-mode")) {
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
+                icon.style.color = "#f1c40f"; 
+            } else {
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
+                icon.style.color = ""; 
+            }
+        });
+
+        // --- 4. التحكم بتبويبات الأسئلة الشائعة ---
+        const accordions = document.querySelectorAll(".accordion-btn");
+        accordions.forEach(acc => {
+            acc.addEventListener("click", function() {
+                this.classList.toggle("active");
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) { content.style.maxHeight = null; } 
+                else { content.style.maxHeight = content.scrollHeight + "px"; }
+            });
+        });
+
+        // --- 5. قراءة الشعار المرفوع من المستخدم ---
+        let uploadedLogoData = null;
+        document.getElementById('qr_logo_upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(event) { uploadedLogoData = event.target.result; }
+                reader.readAsDataURL(file);
+            } else {
+                uploadedLogoData = null;
+            }
+        });
+
+        // --- 6. دالة تجميع البيانات وتجهيزها ---
+        function getQRData() {
+            if (currentActiveType === "section_text") {
+                return document.getElementById("input_qr_text").value.trim();
+            } else if (currentActiveType === "section_wifi") {
+                let ssid = document.getElementById("wifi_ssid").value.trim();
+                let pass = document.getElementById("wifi_password").value.trim();
+                let type = document.getElementById("wifi_type").value;
+                if(!ssid) return "";
+                return `WIFI:T:${type};S:${ssid};P:${pass};;`;
+            } else if (currentActiveType === "section_vcard") {
+                let name = document.getElementById("vcard_name").value.trim();
+                let phone = document.getElementById("vcard_phone").value.trim();
+                let email = document.getElementById("vcard_email").value.trim();
+                if(!name || !phone) return "";
+                return `BEGIN:VCARD\nVERSION:3.0\nN;CHARSET=UTF-8:${name}\nFN;CHARSET=UTF-8:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
+            } else if (currentActiveType === "section_whatsapp") {
+                let phone = document.getElementById("wa_number").value.trim().replace(/\D/g, '');
+                let msg = encodeURIComponent(document.getElementById("wa_message").value.trim());
+                if(!phone) return "";
+                return `https://wa.me/${phone}?text=${msg}`;
+            }
+            return "";
+        }
+
+        // --- 7. المحرك الرئيسي: إنشاء الـ QR Code ---
+        let qrcodeObject = null;
+        document.getElementById("btn_generate_qr").addEventListener("click", function() {
+            let rawData = getQRData();
+            if (!rawData) {
+                alert("يرجى تعبئة الحقول المطلوبة بشكل صحيح قبل الإنشاء.");
+                return;
+            }
+
+            // الحل الجذري والنهائي: حقن رمز اليونيكود المخفي (BOM) في البداية
+            let qrFinalData = '\uFEFF' + rawData;
+
+            const container = document.getElementById("qrcode_container");
+            container.innerHTML = "";
+
+            let colorDark = document.getElementById("color_dark").value;
+            let colorLight = document.getElementById("color_light").value;
+            let ecLevel = document.getElementById("qr_ec_level").value;
+
+            // إعدادات الرسم القياسية النظيفة
+            let options = {
+                text: qrFinalData,
+                width: 250,
+                height: 250,
+                colorDark : colorDark,
+                colorLight : colorLight,
+                correctLevel : QRCode.CorrectLevel[ecLevel],
+                quietZone: 15,
+                quietZoneColor: colorLight
+            };
+
+            if(uploadedLogoData) {
+                options.logo = uploadedLogoData;
+                options.logoWidth = 60;
+                options.logoHeight = 60;
+                options.logoBackgroundColor = colorLight;
+                options.logoBackgroundTransparent = false;
+            }
+
+            qrcodeObject = new QRCode(container, options);
+            document.getElementById("resultBox").style.display = "block";
+            
+            setTimeout(() => {
+                saveToHistory();
+                loadHistory();
+            }, 500);
+        });
+
+        // --- 8. التحميل بالصيغ المتعددة (PNG, JPEG, WEBP, PDF) ---
+        document.getElementById("btn_download_qr").addEventListener("click", function() {
+            const canvas = document.querySelector("#qrcode_container canvas");
+            if (!canvas) return alert("يرجى إنشاء الكود أولاً.");
+
+            let format = document.getElementById("select_qr_format").value;
+
+            if(format === "pdf") {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                const imgData = canvas.toDataURL("image/png");
+                doc.setFont("helvetica");
+                doc.text("QR Code Document", 10, 20);
+                doc.addImage(imgData, 'PNG', 50, 40, 110, 110);
+                doc.save("QRCode.pdf");
+            } else {
+                const imageType = `image/${format}`;
+                const dataUrl = canvas.toDataURL(imageType);
+                const link = document.createElement('a');
+                link.download = `QRCode.${format}`;
+                link.href = dataUrl;
+                link.click();
+            }
+        });
+
+        // --- 9. مشاركة الصورة عبر واتساب ---
+        document.getElementById("btn_share_qr_whatsapp").addEventListener("click", async function(e) {
+            e.preventDefault();
+            const canvas = document.querySelector("#qrcode_container canvas");
+            if (!canvas) return alert("يرجى إنشاء الكود أولاً.");
+
+            canvas.toBlob(async function(blob) {
+                const file = new File([blob], "qrcode.png", { type: "image/png" });
+                const shareData = {
+                    title: 'QR Code',
+                    text: 'تفضل هذا الـ QR Code الذي قمت بإنشائه:',
+                    files: [file]
+                };
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.log("تم إلغاء المشاركة أو حدث خطأ:", err);
+                    }
+                } else {
+                    alert("متصفحك الحالي لا يدعم المشاركة المباشرة للصور. يرجى تحميل الصورة ومشاركتها يدوياً.");
+                }
+            }, "image/png");
+        });
+
+        // --- 10. طباعة الصورة مباشرة ---
+        document.getElementById("btn_print_qr").addEventListener("click", function() {
+            window.print();
+        });
+
+        // --- 11. حفظ واسترجاع السجل المحلي (History) ---
+        function saveToHistory() {
+            const canvas = document.querySelector("#qrcode_container canvas");
+            if(!canvas) return;
+            const imgData = canvas.toDataURL("image/jpeg", 0.5); 
+            let history = JSON.parse(localStorage.getItem("qr_history_pro") || "[]");
+            history.unshift(imgData); 
+            if(history.length > 5) history.pop(); 
+            localStorage.setItem("qr_history_pro", JSON.stringify(history));
+        }
+
+        function loadHistory() {
+            let history = JSON.parse(localStorage.getItem("qr_history_pro") || "[]");
+            const historySec = document.getElementById("historySection");
+            const historyGrid = document.getElementById("historyGrid");
+            historyGrid.innerHTML = "";
+            
+            if(history.length > 0) {
+                historySec.style.display = "block";
+                history.forEach(imgData => {
+                    let img = document.createElement("img");
+                    img.src = imgData;
+                    let div = document.createElement("div");
+                    div.className = "history-item";
+                    div.appendChild(img);
+                    
+                    div.addEventListener("click", () => {
+                        const link = document.createElement('a');
+                        link.download = "Saved_QR_Code.png";
+                        link.href = imgData;
+                        link.click();
+                    });
+                    historyGrid.appendChild(div);
+                });
+            }
+        }
+        window.onload = loadHistory;
+
+        // --- 12. مشاركة رابط التطبيق العام ---
+        document.getElementById("btn_share_app").addEventListener("click", async () => {
+            const shareData = {
+                title: 'المولد الاحترافي لرموز QR',
+                text: 'أداة رائعة ومجانية لإنشاء رموز QR Code احترافية. جربها الآن!',
+                url: window.location.href
+            };
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) { console.log(err); }
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("تم نسخ رابط التطبيق للحافظة.");
+            }
+        });
+
+        // --- 13. برمجة PWA (زر التثبيت) ---
+        let deferredPrompt;
+        const installAppBtn = document.getElementById('btn_install_app');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); 
+            deferredPrompt = e; 
+        });
+
+        installAppBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt(); 
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            } else {
+                alert("📥 لتنزيل التطبيق:\n🍎 آيفون (Safari): اضغط 'المشاركة' -> 'إضافة للشاشة الرئيسية'.\n🤖 أندرويد (Chrome): اضغط 'الخيارات' -> 'تثبيت التطبيق'.");
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installAppBtn.style.display = 'none';
+        });
+
+        // تسجيل عامل الخدمة (Service Worker)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('./sw.js').catch((error) => console.log('فشل تسجيل SW:', error));
+            });
+        }
+    </script>
+</body>
+</html>
