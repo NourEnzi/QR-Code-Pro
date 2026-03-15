@@ -1,6 +1,6 @@
 {
   "name": "QR Code Generator",
-  "short_name": "QR Code",
+  "short_name": "QR Code Pro",
   "description": "المولد الاحترافي لرموز الاستجابة السريعة (QR Code) - تطوير نورالدين السوالمه",
   "start_url": "./index.html",
   "display": "standalone",
