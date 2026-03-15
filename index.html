@@ -8,6 +8,12 @@
     })(window,document,'script','dataLayer','GTM-55PRQZF3');</script>
     <title>المولد الاحترافي QR Code Pro </title>
     <link rel="icon" href="icon.png" type="image/png">
+    
+    <meta property="og:title" content="المولد الاحترافي QR Code Pro">
+    <meta property="og:description" content="أداة احترافية ومجانية لإنشاء رموز الاستجابة السريعة QR Code للنصوص، الروابط، شبكات الواي فاي، جهات الاتصال، ورسائل الواتساب مع إمكانية التخصيص.">
+    <meta property="og:image" content="icon.png">
+    <meta property="og:type" content="website">
+
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="description" content="أداة احترافية ومجانية لإنشاء رموز الاستجابة السريعة QR Code للنصوص، الروابط، شبكات الواي فاي، جهات الاتصال، ورسائل الواتساب مع إمكانية التخصيص.">
     <meta name="author" content="Nour Eddin Alsawalmeh">
@@ -68,6 +74,7 @@
             margin: 0; padding: 20px;
             min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; box-sizing: border-box;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; /* حماية: منع تظليل ونسخ النصوص */
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
@@ -112,12 +119,18 @@
         .customization-box { background-color: var(--law-col-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-col); margin-top: 20px; margin-bottom: 20px; transition: all 0.4s ease; }
         .customization-box h3 { margin-top: 0; color: #2980b9; font-size: 17px; border-bottom: 2px solid var(--border-col); padding-bottom: 10px; }
 
-        .calc-btn { width: 100%; padding: 15px; background-color: var(--btn-bg); color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background-color 0.3s ease, transform 0.1s ease; font-family: inherit;}
+        /* أزرار العمليات (الإنشاء والتفريغ) */
+        .action-buttons { display: flex; gap: 10px; margin-top: 15px; width: 100%; }
+        .calc-btn { flex: 1; padding: 15px; background-color: var(--btn-bg); color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; font-family: inherit; }
         .calc-btn:hover { background-color: var(--btn-hover); }
         .calc-btn:active { transform: scale(0.98); }
+        
+        .clear-btn { width: 60px; padding: 15px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; font-size: 20px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; display: flex; justify-content: center; align-items: center; }
+        .clear-btn:hover { background-color: #c0392b; }
+        .clear-btn:active { transform: scale(0.98); }
 
         /* منطقة النتائج والتنزيل */
-        .result-section { margin-top: 30px; display: none; text-align: center; }
+        .result-section { margin-top: 30px; display: none; text-align: center; scroll-margin-top: 20px; }
         .qr-display-box { background-color: white; padding: 20px; border-radius: 10px; display: inline-block; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
         .download-group { display: flex; gap: 0; margin-bottom: 15px; width: 100%; }
@@ -181,7 +194,7 @@
         @media print {
             body { background-color: #fff !important; color: #000 !important; padding: 0; }
             .calculator-section { box-shadow: none; padding: 0; }
-            .tabs-container, .disclaimer-box, .customization-box, .form-row, .calc-btn, .print-btn, .share-wa-btn, .download-group, .history-section, .copyright-footer, .faq-accordion, .floating-action-menu, .char-counter-container { display: none !important; }
+            .tabs-container, .disclaimer-box, .customization-box, .form-row, .action-buttons, .print-btn, .share-wa-btn, .download-group, .history-section, .copyright-footer, .faq-accordion, .floating-action-menu, .char-counter-container { display: none !important; }
             .result-section { display: block !important; margin-top: 0; }
             .qr-display-box { box-shadow: none; border: 2px solid #000; }
         }
@@ -190,6 +203,16 @@
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55PRQZF3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
+    <script>
+        // حماية: منع النقر بزر الماوس الأيمن ومنع اختصارات لوحة المفاتيح للمطورين
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // منع F12
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // منع Ctrl+Shift+I وغيرها
+            if(e.ctrlKey && e.keyCode == 85) return false; // منع Ctrl+U
+        };
+    </script>
+
     <main class="calculator-section">
         <h2>المولد الاحترافي QR Code Pro </h2>
         
@@ -207,7 +230,7 @@
 
         <div id="section_text" class="input-section active">
             <div class="form-group">
-                <label for="input_qr_text">أدخل النص أو الفقرة التعريفية هنا:</label>
+                <label for="input_qr_text">أدخل النص أو الرابط المراد تحويله هنا:</label>
                 <textarea id="input_qr_text" rows="4" placeholder="مثال: تعريف عن مادة الحديد، أو ضع رابطاً مباشراً..."></textarea>
                 
                 <div class="char-counter-container" id="char_counter_hint">
@@ -272,7 +295,7 @@
             <h3>🎨 خيارات التخصيص (اختياري)</h3>
             <div class="form-row">
                 <div class="form-group">
-                    <label for="color_dark">لون الكود (النقاط):</label>
+                    <label for="color_dark">لون الرمز (النقاط):</label>
                     <input type="color" id="color_dark" value="#000000">
                 </div>
                 <div class="form-group">
@@ -287,7 +310,7 @@
                         <option value="L">منخفض (L) - الأفضل للنصوص الطويلة</option>
                         <option value="M">متوسط (M) - قياسي</option>
                         <option value="Q">عالي (Q) - جيد لطباعة الملابس</option>
-                        <option value="H" selected>أقصى (H) - الأفضل عند إضافة شعار</option>
+                        <option value="H" selected>أقصى دقة (H) - الأفضل مع الشعارات</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -297,7 +320,10 @@
             </div>
         </div>
         
-        <button id="btn_generate_qr" class="calc-btn">🚀 إنشاء QR Code</button>
+        <div class="action-buttons">
+            <button id="btn_generate_qr" class="calc-btn">🚀 إنشاء QR Code</button>
+            <button id="btn_clear_fields" class="clear-btn" title="تفريغ الحقول"><i class="fa-solid fa-broom"></i></button>
+        </div>
 
         <div class="result-section" id="resultBox">
             <div class="qr-display-box" id="qrcode_container">
@@ -306,7 +332,7 @@
             <div class="download-group">
                 <select id="select_qr_format">
                     <option value="png">صيغة PNG (عالية الجودة)</option>
-                    <option value="jpeg">صيغة JPEG (صورة عادية)</option>
+                    <option value="jpeg">صيغة JPG (خفيفة ومناسبة للمشاركة)</option>
                     <option value="webp">صيغة WEBP (خفيفة للويب)</option>
                     <option value="pdf">صيغة PDF (للطباعة)</option>
                 </select>
@@ -337,7 +363,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.6</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.8</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
@@ -409,6 +435,27 @@
             }
         });
 
+        // --- برمجة زر تفريغ الحقول ---
+        document.getElementById("btn_clear_fields").addEventListener("click", function() {
+            if(confirm("هل أنت متأكد أنك تريد مسح جميع البيانات المدخلة؟")) {
+                document.getElementById("input_qr_text").value = "";
+                document.getElementById("wifi_ssid").value = "";
+                document.getElementById("wifi_password").value = "";
+                document.getElementById("vcard_name").value = "";
+                document.getElementById("vcard_phone").value = "";
+                document.getElementById("vcard_email").value = "";
+                document.getElementById("wa_number").value = "";
+                document.getElementById("wa_message").value = "";
+                
+                document.getElementById("char_count").innerText = "عدد الأحرف: 0";
+                charAdviceDisplay.innerText = "ابدأ الكتابة للحصول على نصيحة الأداء واختيار الدقة...";
+                charAdviceDisplay.style.color = "inherit";
+                document.getElementById("qr_ec_level").value = "H";
+                
+                document.getElementById("resultBox").style.display = "none";
+            }
+        });
+
         // --- 3. تبديل الوضع الليلي ---
         document.getElementById("btn_toggle_darkmode").addEventListener("click", function() {
             document.body.classList.toggle("dark-mode");
@@ -465,17 +512,15 @@
                 if(!name || !phone) return "";
                 return `BEGIN:VCARD\nVERSION:3.0\nN;CHARSET=UTF-8:${name}\nFN;CHARSET=UTF-8:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
             } else if (currentActiveType === "section_whatsapp") {
-                // الفلتر الذكي لرقم الهاتف
                 let rawPhone = document.getElementById("wa_number").value.trim();
-                let phone = rawPhone.replace(/\D/g, ''); // إزالة أي رموز غير رقمية
+                let phone = rawPhone.replace(/\D/g, ''); 
                 if (phone.startsWith('00')) {
-                    phone = phone.substring(2); // إزالة الأصفار المزدوجة من البداية
+                    phone = phone.substring(2); 
                 }
                 
                 let msg = encodeURIComponent(document.getElementById("wa_message").value.trim());
                 if(!phone) return "";
                 
-                // استخدام الرابط الرسمي الكامل لشركة ميتا (API)
                 return `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
             }
             return "";
@@ -490,8 +535,6 @@
                 return;
             }
 
-            // حقن رمز اليونيكود المخفي (BOM) فقط في حالة النصوص وجهات الاتصال (vCard) لضمان اللغة العربية.
-            // وتمرير الروابط (واي فاي، واتساب) بشكل نقي ليقبلها الآيفون فوراً.
             let qrFinalData = rawData;
             if (currentActiveType === "section_text" || currentActiveType === "section_vcard") {
                 qrFinalData = '\uFEFF' + rawData;
@@ -504,7 +547,6 @@
             let colorLight = document.getElementById("color_light").value;
             let ecLevel = document.getElementById("qr_ec_level").value;
 
-            // إعدادات الرسم القياسية النظيفة
             let options = {
                 text: qrFinalData,
                 width: 250,
@@ -526,6 +568,11 @@
 
             qrcodeObject = new QRCode(container, options);
             document.getElementById("resultBox").style.display = "block";
+            
+            // التمرير التلقائي السلس نحو الرمز المولد
+            setTimeout(() => {
+                document.getElementById("resultBox").scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
             
             setTimeout(() => {
                 saveToHistory();
@@ -630,7 +677,7 @@
         // --- 12. مشاركة رابط التطبيق العام ---
         document.getElementById("btn_share_app").addEventListener("click", async () => {
             const shareData = {
-                title: 'المولد الاحترافي لرموز QR',
+                title: 'المولد الاحترافي QR Code Pro',
                 text: 'أداة رائعة ومجانية لإنشاء رموز QR Code احترافية. جربها الآن!',
                 url: window.location.href
             };
