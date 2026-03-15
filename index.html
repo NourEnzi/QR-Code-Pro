@@ -199,12 +199,14 @@
             .char-counter-container { flex-direction: column; align-items: flex-start; gap: 8px; }
         }
         
+        /* التعديل الجذري للطباعة (إخفاء كل شيء باستثناء العنوان والرمز المولد) */
         @media print {
             body { background-color: #fff !important; color: #000 !important; padding: 0; }
-            .calculator-section { box-shadow: none; padding: 0; }
-            .tabs-container, .disclaimer-box, .customization-box, .form-row, .action-buttons, .print-btn, .share-wa-btn, .download-group, .history-section, .copyright-footer, .faq-accordion, .floating-action-menu, .char-counter-container { display: none !important; }
-            .result-section { display: block !important; margin-top: 0; }
-            .qr-display-box { box-shadow: none; border: 2px solid #000; }
+            .calculator-section { box-shadow: none; padding: 0; margin: 0 auto; border: none; }
+            .tabs-container, .disclaimer-box, .input-section, .customization-box, .action-buttons, .download-group, .share-wa-btn, .print-btn, .history-section, .faq-accordion, .copyright-footer, .floating-action-menu { display: none !important; }
+            h2 { display: block !important; margin-bottom: 40px; font-size: 28px; }
+            .result-section { display: block !important; margin-top: 0; text-align: center; }
+            .qr-display-box { box-shadow: none; border: none; padding: 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
         }
     </style>
 </head>
@@ -377,7 +379,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.9</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.10</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
