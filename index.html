@@ -337,7 +337,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.5</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.6</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
@@ -465,11 +465,18 @@
                 if(!name || !phone) return "";
                 return `BEGIN:VCARD\nVERSION:3.0\nN;CHARSET=UTF-8:${name}\nFN;CHARSET=UTF-8:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
             } else if (currentActiveType === "section_whatsapp") {
-                let phone = document.getElementById("wa_number").value.trim().replace(/\D/g, '');
+                // الفلتر الذكي لرقم الهاتف
+                let rawPhone = document.getElementById("wa_number").value.trim();
+                let phone = rawPhone.replace(/\D/g, ''); // إزالة أي رموز غير رقمية
+                if (phone.startsWith('00')) {
+                    phone = phone.substring(2); // إزالة الأصفار المزدوجة من البداية
+                }
+                
                 let msg = encodeURIComponent(document.getElementById("wa_message").value.trim());
                 if(!phone) return "";
-                // التعديل الجذري للآيفون: استخدام البروتوكول العميق بدلاً من رابط الويب
-                return `whatsapp://send?phone=${phone}&text=${msg}`;
+                
+                // استخدام الرابط الرسمي الكامل لشركة ميتا (API)
+                return `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
             }
             return "";
         }
