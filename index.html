@@ -78,6 +78,14 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
+        /* استثناء الحماية: السماح بالتظليل والنسخ داخل صناديق الإدخال فقط */
+        input, textarea {
+            -webkit-user-select: text !important; 
+            -moz-user-select: text !important; 
+            -ms-user-select: text !important; 
+            user-select: text !important;
+        }
+
         .calculator-section {
             background-color: var(--calc-bg); padding: 35px; border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 850px;
@@ -204,8 +212,14 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55PRQZF3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
     <script>
-        // حماية: منع النقر بزر الماوس الأيمن ومنع اختصارات لوحة المفاتيح للمطورين
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        // حماية ذكية: منع النقر بزر الماوس الأيمن إلا داخل حقول الإدخال لتسهيل اللصق
+        document.addEventListener('contextmenu', function(e) { 
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault(); 
+            }
+        });
+        
+        // منع اختصارات لوحة المفاتيح للمطورين
         document.onkeydown = function(e) {
             if(e.keyCode == 123) return false; // منع F12
             if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // منع Ctrl+Shift+I وغيرها
@@ -363,7 +377,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.8</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.9</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
