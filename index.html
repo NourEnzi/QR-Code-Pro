@@ -337,7 +337,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.4</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.5</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
@@ -468,7 +468,8 @@
                 let phone = document.getElementById("wa_number").value.trim().replace(/\D/g, '');
                 let msg = encodeURIComponent(document.getElementById("wa_message").value.trim());
                 if(!phone) return "";
-                return `https://wa.me/${phone}?text=${msg}`;
+                // التعديل الجذري للآيفون: استخدام البروتوكول العميق بدلاً من رابط الويب
+                return `whatsapp://send?phone=${phone}&text=${msg}`;
             }
             return "";
         }
@@ -482,7 +483,6 @@
                 return;
             }
 
-            // الحل البرمجي الذكي (النسخة V1.2.4): 
             // حقن رمز اليونيكود المخفي (BOM) فقط في حالة النصوص وجهات الاتصال (vCard) لضمان اللغة العربية.
             // وتمرير الروابط (واي فاي، واتساب) بشكل نقي ليقبلها الآيفون فوراً.
             let qrFinalData = rawData;
