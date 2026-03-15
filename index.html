@@ -7,7 +7,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-55PRQZF3');</script>
     <title>المولد الاحترافي لرموز QR Code</title>
-    <link rel="icon" href="icon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <meta name="description" content="أداة احترافية ومجانية لإنشاء رموز الاستجابة السريعة QR Code للنصوص، الروابط، شبكات الواي فاي، جهات الاتصال، ورسائل الواتساب مع إمكانية التخصيص.">
     <meta name="author" content="Nour Eddin Alsawalmeh">
@@ -337,7 +336,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.3</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.4</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
@@ -482,8 +481,13 @@
                 return;
             }
 
-            // الحل الجذري والنهائي: حقن رمز اليونيكود المخفي (BOM) في البداية
-            let qrFinalData = '\uFEFF' + rawData;
+            // الحل البرمجي الذكي (النسخة V1.2.4): 
+            // حقن رمز اليونيكود المخفي (BOM) فقط في حالة النصوص وجهات الاتصال (vCard) لضمان اللغة العربية.
+            // وتمرير الروابط (واي فاي، واتساب) بشكل نقي ليقبلها الآيفون فوراً.
+            let qrFinalData = rawData;
+            if (currentActiveType === "section_text" || currentActiveType === "section_vcard") {
+                qrFinalData = '\uFEFF' + rawData;
+            }
 
             const container = document.getElementById("qrcode_container");
             container.innerHTML = "";
