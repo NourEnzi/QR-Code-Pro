@@ -1,11 +1,12 @@
-const CACHE_NAME = 'qr-app-cache-v1.6.0';
+const CACHE_NAME = 'qr-app-cache-v1.6.0 A';
 const urlsToCache = [
   './index.html',
   './manifest.json',
   'https://unpkg.com/easyqrcodejs/dist/easy.qrcode.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
   'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+  './icon.png'
 ];
 
 // تثبيت ملفات التخزين المؤقت
