@@ -9,6 +9,7 @@
     <title>المولد الاحترافي QR Code Pro </title>
     <link rel="icon" href="icon.png" type="image/png">
     <link rel="apple-touch-icon" href="icon.png">
+    
     <meta property="og:title" content="المولد الاحترافي QR Code Pro">
     <meta property="og:description" content="أداة احترافية ومجانية لإنشاء رموز الاستجابة السريعة QR Code للنصوص، الروابط، شبكات الواي فاي، جهات الاتصال، ورسائل الواتساب مع إمكانية التخصيص.">
     <meta property="og:image" content="icon.png">
@@ -319,9 +320,28 @@
                     <input type="color" id="color_light" value="#ffffff">
                 </div>
             </div>
+            
             <div class="form-row">
                 <div class="form-group">
-                    <label for="qr_ec_level">دقة تصحيح الأخطاء (تتغير تلقائياً مع النص):</label>
+                    <label for="color_eye_outer">لون الإطار الخارجي للعين (الزوايا):</label>
+                    <input type="color" id="color_eye_outer" value="#000000">
+                </div>
+                <div class="form-group">
+                    <label for="color_eye_inner">لون المربع الداخلي للعين:</label>
+                    <input type="color" id="color_eye_inner" value="#000000">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="qr_dot_scale">نمط وشكل النقاط:</label>
+                    <select id="qr_dot_scale">
+                        <option value="1">مربعات كلاسيكية متصلة (الافتراضي)</option>
+                        <option value="0.5">نقاط متفرقة (ستايل حديث)</option>
+                        <option value="0.75">مربعات صغيرة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="qr_ec_level">دقة تصحيح الأخطاء:</label>
                     <select id="qr_ec_level">
                         <option value="L">منخفض (L) - الأفضل للنصوص الطويلة</option>
                         <option value="M">متوسط (M) - قياسي</option>
@@ -329,6 +349,9 @@
                         <option value="H" selected>أقصى دقة (H) - الأفضل مع الشعارات</option>
                     </select>
                 </div>
+            </div>
+            
+            <div class="form-row">
                 <div class="form-group">
                     <label for="qr_logo_upload">رفع شعار (Logo) في المنتصف:</label>
                     <input type="file" id="qr_logo_upload" accept="image/png, image/jpeg, image/webp" style="padding: 9px;">
@@ -379,7 +402,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.2.10</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.3.1</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
@@ -462,6 +485,13 @@
                 document.getElementById("vcard_email").value = "";
                 document.getElementById("wa_number").value = "";
                 document.getElementById("wa_message").value = "";
+                
+                // تصفير حقول التخصيص الجديدة والقديمة
+                document.getElementById("color_dark").value = "#000000";
+                document.getElementById("color_light").value = "#ffffff";
+                document.getElementById("color_eye_outer").value = "#000000";
+                document.getElementById("color_eye_inner").value = "#000000";
+                document.getElementById("qr_dot_scale").value = "1";
                 
                 document.getElementById("char_count").innerText = "عدد الأحرف: 0";
                 charAdviceDisplay.innerText = "ابدأ الكتابة للحصول على نصيحة الأداء واختيار الدقة...";
@@ -561,6 +591,12 @@
 
             let colorDark = document.getElementById("color_dark").value;
             let colorLight = document.getElementById("color_light").value;
+            
+            // قراءة الخيارات البصرية الجديدة
+            let eyeOuter = document.getElementById("color_eye_outer").value;
+            let eyeInner = document.getElementById("color_eye_inner").value;
+            let dotScaleVal = parseFloat(document.getElementById("qr_dot_scale").value);
+            
             let ecLevel = document.getElementById("qr_ec_level").value;
 
             let options = {
@@ -569,6 +605,9 @@
                 height: 250,
                 colorDark : colorDark,
                 colorLight : colorLight,
+                PO: eyeOuter,         // لون إطار العين
+                PI: eyeInner,         // لون نقطة العين
+                dotScale: dotScaleVal, // شكل وحجم النقاط
                 correctLevel : QRCode.CorrectLevel[ecLevel],
                 quietZone: 15,
                 quietZoneColor: colorLight
