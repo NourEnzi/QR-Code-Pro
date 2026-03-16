@@ -101,7 +101,7 @@
 
         /* تبويبات أنواع الـ QR */
         .tabs-container { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-        .tab-btn { flex: 1; min-width: 120px; padding: 12px; background-color: var(--info-header-bg); color: var(--text-main); border: 1px solid var(--border-col); border-radius: 5px; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .tab-btn { flex: 1; min-width: 110px; padding: 12px; background-color: var(--info-header-bg); color: var(--text-main); border: 1px solid var(--border-col); border-radius: 5px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
         .tab-btn.active { background-color: #3498db; color: white; border-color: #3498db; }
         .tab-btn:hover:not(.active) { background-color: var(--border-col); }
 
@@ -124,6 +124,8 @@
             transition: all 0.3s ease; border: 1px solid var(--border-col);
         }
         #char_advice { line-height: 1.4; }
+
+        .optional-note { font-size: 12.5px; color: var(--text-muted); display: block; margin-top: -8px; margin-bottom: 15px; }
 
         .customization-box { background-color: var(--law-col-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-col); margin-top: 20px; margin-bottom: 20px; transition: all 0.4s ease; }
         .customization-box h3 { margin-top: 0; color: #2980b9; font-size: 17px; border-bottom: 2px solid var(--border-col); padding-bottom: 10px; }
@@ -243,6 +245,9 @@
             <button class="tab-btn" data-target="section_wifi" id="tab_btn_wifi"><i class="fa-solid fa-wifi"></i> شبكة Wi-Fi</button>
             <button class="tab-btn" data-target="section_vcard" id="tab_btn_vcard"><i class="fa-solid fa-address-card"></i> جهة اتصال</button>
             <button class="tab-btn" data-target="section_whatsapp" id="tab_btn_whatsapp"><i class="fa-brands fa-whatsapp"></i> واتساب</button>
+            <button class="tab-btn" data-target="section_email" id="tab_btn_email"><i class="fa-solid fa-envelope"></i> إيميل</button>
+            <button class="tab-btn" data-target="section_sms" id="tab_btn_sms"><i class="fa-solid fa-comment-sms"></i> رسالة SMS</button>
+            <button class="tab-btn" data-target="section_geo" id="tab_btn_geo"><i class="fa-solid fa-location-dot"></i> موقع جغرافي</button>
         </div>
 
         <div id="section_text" class="input-section active">
@@ -306,6 +311,50 @@
                 <label for="wa_message">الرسالة الافتراضية (اختياري):</label>
                 <textarea id="wa_message" rows="2" placeholder="مرحباً، أود الاستفسار عن..."></textarea>
             </div>
+        </div>
+
+        <div id="section_email" class="input-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email_address">البريد الإلكتروني للجهة المستلمة:</label>
+                    <input type="email" id="email_address" placeholder="example@domain.com">
+                </div>
+                <div class="form-group">
+                    <label for="email_subject">موضوع الرسالة (اختياري):</label>
+                    <input type="text" id="email_subject" placeholder="مثال: طلب عرض سعر">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email_body">نص الرسالة الافتراضي (اختياري):</label>
+                <textarea id="email_body" rows="3" placeholder="اكتب محتوى الرسالة هنا ليظهر جاهزاً للعميل..."></textarea>
+            </div>
+        </div>
+
+        <div id="section_sms" class="input-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sms_number">رقم الهاتف (مع رمز الدولة):</label>
+                    <input type="tel" id="sms_number" placeholder="مثال: +962700000000">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sms_message">الرسالة القصيرة الافتراضية:</label>
+                <textarea id="sms_message" rows="2" placeholder="اكتب رسالتك القصيرة هنا..."></textarea>
+            </div>
+        </div>
+
+        <div id="section_geo" class="input-section">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="geo_lat">خط العرض (Latitude):</label>
+                    <input type="text" id="geo_lat" placeholder="مثال: 31.9539">
+                </div>
+                <div class="form-group">
+                    <label for="geo_lng">خط الطول (Longitude):</label>
+                    <input type="text" id="geo_lng" placeholder="مثال: 35.9106">
+                </div>
+            </div>
+            <span class="optional-note">* تلميح: يمكنك استخراج الإحداثيات من خرائط جوجل بالضغط المطول على أي موقع.</span>
         </div>
 
         <div class="customization-box">
@@ -402,7 +451,7 @@
 
     <div class="copyright-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة - تم التطوير والبرمجة بواسطة نورالدين السوالمه</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.3.1</span></p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; direction: ltr;">Version: <span style="font-weight: bold;">V1.4.0</span></p>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/" target="_blank" title="تواصل معي على لينكد إن"><i class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/NourEnzi" target="_blank" title="حسابي ومشاريعي على جيت هب"><i class="fa-brands fa-github"></i></a>
@@ -425,7 +474,7 @@
     </div>
 
     <script>
-        // --- 1. التبديل بين التبويبات (النص، الواي فاي، الواتساب) ---
+        // --- 1. التبديل بين التبويبات (النص، الواي فاي، الواتساب والخيارات الجديدة) ---
         const tabBtns = document.querySelectorAll(".tab-btn");
         const sections = document.querySelectorAll(".input-section");
         let currentActiveType = "section_text";
@@ -486,7 +535,16 @@
                 document.getElementById("wa_number").value = "";
                 document.getElementById("wa_message").value = "";
                 
-                // تصفير حقول التخصيص الجديدة والقديمة
+                // مسح الحقول الجديدة
+                document.getElementById("email_address").value = "";
+                document.getElementById("email_subject").value = "";
+                document.getElementById("email_body").value = "";
+                document.getElementById("sms_number").value = "";
+                document.getElementById("sms_message").value = "";
+                document.getElementById("geo_lat").value = "";
+                document.getElementById("geo_lng").value = "";
+                
+                // تصفير حقول التخصيص
                 document.getElementById("color_dark").value = "#000000";
                 document.getElementById("color_light").value = "#ffffff";
                 document.getElementById("color_eye_outer").value = "#000000";
@@ -563,11 +621,26 @@
                 if (phone.startsWith('00')) {
                     phone = phone.substring(2); 
                 }
-                
                 let msg = encodeURIComponent(document.getElementById("wa_message").value.trim());
                 if(!phone) return "";
-                
                 return `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`;
+            } else if (currentActiveType === "section_email") {
+                let email = document.getElementById("email_address").value.trim();
+                let subject = encodeURIComponent(document.getElementById("email_subject").value.trim());
+                let body = encodeURIComponent(document.getElementById("email_body").value.trim());
+                if(!email) return "";
+                return `mailto:${email}?subject=${subject}&body=${body}`;
+            } else if (currentActiveType === "section_sms") {
+                let phone = document.getElementById("sms_number").value.trim();
+                let msg = encodeURIComponent(document.getElementById("sms_message").value.trim());
+                if(!phone) return "";
+                return `smsto:${phone}:${msg}`;
+            } else if (currentActiveType === "section_geo") {
+                let lat = document.getElementById("geo_lat").value.trim();
+                let lng = document.getElementById("geo_lng").value.trim();
+                if(!lat || !lng) return "";
+                // توليد رابط يفتح خرائط جوجل مباشرة لضمان التوافق مع كافة الأجهزة
+                return `https://maps.google.com/?q=${lat},${lng}`;
             }
             return "";
         }
@@ -591,12 +664,9 @@
 
             let colorDark = document.getElementById("color_dark").value;
             let colorLight = document.getElementById("color_light").value;
-            
-            // قراءة الخيارات البصرية الجديدة
             let eyeOuter = document.getElementById("color_eye_outer").value;
             let eyeInner = document.getElementById("color_eye_inner").value;
             let dotScaleVal = parseFloat(document.getElementById("qr_dot_scale").value);
-            
             let ecLevel = document.getElementById("qr_ec_level").value;
 
             let options = {
@@ -605,9 +675,9 @@
                 height: 250,
                 colorDark : colorDark,
                 colorLight : colorLight,
-                PO: eyeOuter,         // لون إطار العين
-                PI: eyeInner,         // لون نقطة العين
-                dotScale: dotScaleVal, // شكل وحجم النقاط
+                PO: eyeOuter,         
+                PI: eyeInner,         
+                dotScale: dotScaleVal, 
                 correctLevel : QRCode.CorrectLevel[ecLevel],
                 quietZone: 15,
                 quietZoneColor: colorLight
