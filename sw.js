@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qr-app-cache-v1.6.0 B';
+const CACHE_NAME = 'qr-app-cache-v1.6.0 C';
 const urlsToCache = [
   './index.html',
   './manifest.json',
