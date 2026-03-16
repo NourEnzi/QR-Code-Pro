@@ -1,71 +1,51 @@
-# 🚀 المولد الاحترافي QR Code Pro (V1.6.0)
+# Professional QR Code Generator & Scanner (Pro) 🚀📱
 
-[![Version](https://img.shields.io/badge/Version-1.6.0-blue.svg)]()
-[![PWA Ready](https://img.shields.io/badge/PWA-Ready-success.svg)]()
-[![Offline Support](https://img.shields.io/badge/Offline-Supported-success.svg)]()
-[![Privacy](https://img.shields.io/badge/Privacy-100%25_Local-brightgreen.svg)]()
+## 📌 Overview
+A robust, **purely client-side** Progressive Web Application (PWA) designed to generate, customize, and scan Quick Response (QR) codes. The tool provides a comprehensive suite for creating dynamic-looking static QR codes for various data types, alongside a secure, offline-capable built-in scanner.
 
-**QR Code Pro** هو تطبيق ويب تقدمي (PWA) متكامل واحترافي، مصمم لإنشاء وقراءة رموز الاستجابة السريعة (QR Code) بأعلى معايير التخصيص والأمان. تم بناء التطبيق ليعمل بالكامل داخل متصفح المستخدم (Client-side) لضمان الخصوصية المطلقة، دون الحاجة لإرسال أي بيانات لخوادم خارجية.
+**Live Demo:** [Try the QR Code Pro Here](https://nourenzi.github.io/QR-Code-Pro/index.html)
 
 ---
 
-## ✨ الميزات الرئيسية (Key Features)
-
-### 1. 🛠️ توليد رموز متعددة الأغراض
-يدعم التطبيق إنشاء رموز QR للعديد من أنواع البيانات التي تلبي احتياجات الأفراد والشركات:
-- النصوص العادية والروابط (URL).
-- شبكات الواي فاي (Wi-Fi) للاتصال التلقائي.
-- جهات الاتصال (VCard) للحفظ المباشر في دفتر العناوين.
-- رسائل الواتساب (WhatsApp) مع إمكانية إضافة رسالة افتراضية.
-- رسائل البريد الإلكتروني (Email) الجاهزة.
-- الرسائل النصية القصيرة (SMS).
-- المواقع الجغرافية (Geo-Location) لفتحها عبر خرائط جوجل.
-
-### 2. 📷 قارئ الرموز المدمج (Scanner)
-- كاميرا مدمجة وآمنة داخل التطبيق لمسح أي رمز QR خارجي.
-- معالجة وفك تشفير الرموز محلياً (Offline).
-- تعرف تلقائي على الروابط لفتحها، أو النصوص لنسخها.
-- مؤثرات صوتية حقيقية (Beep) عند التقاط الرمز بنجاح.
-
-### 3. 🎨 تخصيص بصري عميق (Advanced Customization)
-- التحكم الكامل بألوان الرمز (لون النقاط، لون الخلفية).
-- **تخصيص العيون:** إمكانية تغيير لون الإطار الخارجي والمربع الداخلي لزوايا الرمز بشكل مستقل.
-- **نمط النقاط:** الاختيار بين المربعات الكلاسيكية المتصلة، أو النقاط المتفرقة (الستايل الحديث).
-- **إدارة الشعار (Logo):** رفع شعار في منتصف الرمز، مع شريط سحب للتحكم بحجمه، وخيار لإزالة الخلفية البيضاء من حوله ليدمج مع لون الرمز.
-
-### 4. 🖨️ التصدير والطباعة الذكية
-- إمكانية إضافة **"نص تعريفي"** يظهر أسفل الرمز خصيصاً عند الطباعة الورقية ليوضح محتواه.
-- تحميل الرمز بصيغ متعددة عالية الدقة: `PNG`, `JPG`, `WEBP`, و `PDF`.
-- مشاركة مباشرة للرمز كصورة عبر تطبيق واتساب بنقرة واحدة.
-
-### 5. ⚡ تطبيق ويب تقدمي (PWA) والعمل بدون إنترنت
-- التطبيق قابل للتثبيت كبرنامج أساسي على شاشات الهواتف (iOS & Android) وأجهزة سطح المكتب (Windows & Mac).
-- مدعوم بعامل خدمة (Service Worker) يسمح للتطبيق بالعمل بكفاءة تامة **بدون الحاجة لاتصال بالإنترنت**.
-
-### 6. 🛡️ خصوصية وأمان 100%
-- لا توجد قواعد بيانات خلفية. جميع البيانات المدخلة، والصور الممسوحة بالكاميرا، تُعالج محلياً في ذاكرة جهاز المستخدم فقط.
+## ✨ Key Features
+* **Dual Functionality (Generate & Scan):** Seamlessly switch between creating highly customized QR codes and scanning existing ones using the device's camera.
+* **Rich Data Types:** Generates codes for Text/URLs, Wi-Fi networks, VCards, WhatsApp messages, Emails, SMS, and Geo-Locations.
+* **Advanced Customization Engine:** Granular control over colors, eye frames, inner eyes, dot styles (classic, scattered), and embedded logos (with size and transparency controls).
+* **Smart Print & Export:** Features a dedicated print label input for physical copies and supports downloading in multiple formats (PNG, JPG, WEBP, PDF).
+* **Privacy Centric:** **100% Client-Side.** No sensitive user data or scanned images ever leave the user's device or are sent to any server.
+* **Offline & PWA Ready:** Fully installable on iOS, Android, and Desktop with Service Worker integration for reliable offline access.
+* **Responsive UI/UX:** A clean, mobile-friendly interface featuring dynamic Dark/Light modes, animated tabs, and interactive user feedback (beep sounds on scan).
 
 ---
 
-## 💻 التقنيات المستخدمة (Tech Stack)
-
-تم بناء هذا التطبيق باستخدام تقنيات الويب الأساسية لضمان السرعة والتوافقية:
-- **HTML5 & CSS3:** لبناء واجهة مستخدم متجاوبة (Responsive) تدعم الوضعين الليلي والنهاري (Dark/Light Mode).
-- **Vanilla JavaScript:** لبرمجة المنطق والمحرك الأساسي بدون الاعتماد على أطر عمل ثقيلة.
-- **المكتبات الخارجية المساعدة:**
-  - `easyqrcodejs`: لتوليد رموز الـ QR مع خيارات التخصيص المعقدة والشعارات.
-  - `html5-qrcode`: لتشغيل الكاميرا ومعالجة الصور وقراءة الرموز.
-  - `jsPDF`: لتصدير الرموز بصيغة ملفات PDF جاهزة للطباعة.
+## 🛠️ Tech Stack
+* **HTML5 & CSS3:** Semantic structuring, custom styling (Grid/Flexbox), Dark Mode support, and Print Media Queries.
+* **Vanilla JavaScript:** Core business logic, DOM manipulation, and dynamic validations.
+* **easyqrcodejs:** Advanced library for QR code generation and visual customization.
+* **html5-qrcode:** Secure, client-side camera integration for scanning and decoding.
+* **jsPDF:** Client-side PDF generation for printing QR codes.
+* **FontAwesome:** For intuitive UI/UX icons.
 
 ---
 
-## 📂 هيكل المشروع (Project Structure)
+## ⚠️ Privacy & Security Disclaimer
+This tool operates as a strict **Client-Side** utility. All data encoding (generation) and decoding (scanning) occur locally within your browser. We do not track, store, or transmit any textual inputs, generated codes, or camera feeds to external servers.
 
-```text
-QR-Code-Pro/
-│
-├── index.html       # الواجهة الرئيسية وملف الهيكل الأساسي (يحتوي على CSS و JS)
-├── sw.js            # عامل الخدمة (Service Worker) لإدارة الكاش والعمل Offline
-├── manifest.json    # ملف تعريف التطبيق (PWA) لتثبيته على الأجهزة
-├── icon.png         # أيقونة التطبيق الرسمية (مربعة الأبعاد 512x512)
-└── README.md        # ملف التوثيق الحالي
+---
+
+## 🚀 Roadmap (Upcoming Features)
+- [ ] **Batch Generation:** Ability to generate multiple QR codes simultaneously from a CSV/Excel file.
+- [ ] **Scanner History:** Local storage log for previously scanned QR codes.
+- [ ] **Multi-language Support:** Adding full English/Arabic localization toggle.
+
+---
+
+## 📬 Contact & Connect
+Developed and programmed by **Nour Eddin Alsawalmeh** (IT Administrator & Software Quality Assurance).
+
+* **LinkedIn:** [Nour Eddin Alsawalmeh](https://www.linkedin.com/in/nour-eddin-alsawalmeh-91801255/)
+* **GitHub:** [@NourEnzi](https://github.com/NourEnzi)
+* **Email:** NOUR.AL3NEZI@HOTMAIL.COM
+
+---
+*© 2026 All Rights Reserved.*
