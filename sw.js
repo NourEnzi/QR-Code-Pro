@@ -1,6 +1,11 @@
-const CACHE_NAME = 'qr-app-cache-v1.6.0 C';
+// تم رفع رقم الإصدار لإجبار الهواتف على التحديث
+const CACHE_NAME = 'qr-app-cache-v1.7.0';
+
+// تم إضافة ملفات style.css و script.js لقائمة الحفظ
 const urlsToCache = [
   './index.html',
+  './style.css',
+  './script.js',
   './manifest.json',
   'https://unpkg.com/easyqrcodejs/dist/easy.qrcode.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
@@ -24,7 +29,6 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // إذا وجد الملف في الكاش، يعرضه. وإن لم يجده، يجلبه من الإنترنت.
         return response || fetch(event.request);
       })
   );

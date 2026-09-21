@@ -1,5 +1,10 @@
 # Professional QR Code Generator & Scanner (Pro) 🚀📱
 
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.7.0-success.svg)
+![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)
+![Architecture](https://img.shields.io/badge/Architecture-Modular-lightgrey.svg)
+
 ## 📌 Overview
 A robust, **purely client-side** Progressive Web Application (PWA) designed to generate, customize, and scan Quick Response (QR) codes. The tool provides a comprehensive suite for creating dynamic-looking static QR codes for various data types, alongside a secure, offline-capable built-in scanner.
 
@@ -15,6 +20,20 @@ A robust, **purely client-side** Progressive Web Application (PWA) designed to g
 * **Privacy Centric:** **100% Client-Side.** No sensitive user data or scanned images ever leave the user's device or are sent to any server.
 * **Offline & PWA Ready:** Fully installable on iOS, Android, and Desktop with Service Worker integration for reliable offline access.
 * **Responsive UI/UX:** A clean, mobile-friendly interface featuring dynamic Dark/Light modes, animated tabs, and interactive user feedback (beep sounds on scan).
+
+---
+
+## 📂 Project Structure
+```text
+QR-Code-Pro/
+├── index.html       # Core structure and semantic markup
+├── style.css        # Centralized styling and print media queries
+├── script.js        # Business logic, scanner engine, and DOM manipulation
+├── sw.js            # Service Worker for offline caching and PWA support
+├── manifest.json    # PWA configuration and metadata
+├── LICENSE          # MIT License
+└── README.md        # Project documentation
+```
 
 ---
 
