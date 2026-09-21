@@ -1,7 +1,7 @@
 # Professional QR Code Generator & Scanner (Pro) 🚀📱
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
-![Version](https://img.shields.io/badge/Version-1.7.0-success.svg)
+![Version](https://img.shields.io/badge/Version-1.8.0-success.svg)
 ![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)
 ![Architecture](https://img.shields.io/badge/Architecture-Modular-lightgrey.svg)
 
@@ -16,7 +16,8 @@ A robust, **purely client-side** Progressive Web Application (PWA) designed to g
 * **Dual Functionality (Generate & Scan):** Seamlessly switch between creating highly customized QR codes and scanning existing ones using the device's camera.
 * **Rich Data Types:** Generates codes for Text/URLs, Wi-Fi networks, VCards, WhatsApp messages, Emails, SMS, and Geo-Locations.
 * **Advanced Customization Engine:** Granular control over colors, eye frames, inner eyes, dot styles (classic, scattered), and embedded logos (with size and transparency controls).
-* **Smart Print & Export:** Features a dedicated print label input for physical copies and supports downloading in multiple formats (PNG, JPG, WEBP, PDF).
+* **Smart Print & Export:** Features a dedicated print label input for physical copies and supports downloading in multiple formats (PNG, JPG, WEBP, PDF) utilizing **Smart Dynamic File Naming** based on content type and date.
+* **Smart History Management:** Automatically saves your recently generated QR codes and maintains a dedicated **Scanner History** log for quick access and retrieval of previously scanned links.
 * **Privacy Centric:** **100% Client-Side.** No sensitive user data or scanned images ever leave the user's device or are sent to any server.
 * **Offline & PWA Ready:** Fully installable on iOS, Android, and Desktop with Service Worker integration for reliable offline access.
 * **Responsive UI/UX:** A clean, mobile-friendly interface featuring dynamic Dark/Light modes, animated tabs, and interactive user feedback (beep sounds on scan).
@@ -54,7 +55,6 @@ This tool operates as a strict **Client-Side** utility. All data encoding (gener
 
 ## 🚀 Roadmap (Upcoming Features)
 - [ ] **Batch Generation:** Ability to generate multiple QR codes simultaneously from a CSV/Excel file.
-- [ ] **Scanner History:** Local storage log for previously scanned QR codes.
 - [ ] **Multi-language Support:** Adding full English/Arabic localization toggle.
 
 ---
