@@ -186,6 +186,7 @@ body.dark-mode .dark-mode-float { background-color: #444; color: #f1c40f; }
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 .scan-history-actions {
