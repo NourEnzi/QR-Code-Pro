@@ -1,5 +1,5 @@
 // تم رفع رقم الإصدار لإجبار الهواتف على التحديث
-const CACHE_NAME = 'qr-app-cache-v1.7.0';
+const CACHE_NAME = 'qr-app-cache-v1.8.0';
 
 // تم إضافة ملفات style.css و script.js لقائمة الحفظ
 const urlsToCache = [

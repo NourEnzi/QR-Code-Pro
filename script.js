@@ -41,7 +41,7 @@ tabBtns.forEach(btn => {
     });
 });
 
-// --- 2. محرك القارئ (Scanner Engine) وصوت البيب ---
+// --- 2. محرك القارئ (Scanner Engine) وصوت البيب وسجل المسح ---
 let html5QrCode;
 const btnStartScan = document.getElementById("btn_start_scan");
 const btnStopScan = document.getElementById("btn_stop_scan");
@@ -70,6 +70,65 @@ function stopQrScanner() {
     }
 }
 
+// تخزين وعرض السجل الممسوح
+function saveScanHistory(decodedText) {
+    let history = JSON.parse(localStorage.getItem("qr_scan_history_pro") || "[]");
+    history = history.filter(item => item !== decodedText); // منع التكرار
+    history.unshift(decodedText);
+    if(history.length > 10) history.pop(); // الاحتفاظ بآخر 10 عمليات مسح
+    localStorage.setItem("qr_scan_history_pro", JSON.stringify(history));
+    loadScanHistory();
+}
+
+function loadScanHistory() {
+    let history = JSON.parse(localStorage.getItem("qr_scan_history_pro") || "[]");
+    const scanHistorySec = document.getElementById("scanHistorySection");
+    const scanHistoryList = document.getElementById("scanHistoryList");
+    if (!scanHistorySec || !scanHistoryList) return;
+
+    scanHistoryList.innerHTML = "";
+    
+    if(history.length > 0) {
+        scanHistorySec.style.display = "block";
+        history.forEach(text => {
+            let itemDiv = document.createElement("div");
+            itemDiv.className = "scan-history-item";
+            
+            let textDiv = document.createElement("div");
+            textDiv.className = "scan-history-text";
+            textDiv.innerText = text;
+            
+            let actionsDiv = document.createElement("div");
+            actionsDiv.className = "scan-history-actions";
+            
+            let copyBtn = document.createElement("button");
+            copyBtn.className = "scan-action-btn";
+            copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i>';
+            copyBtn.title = "نسخ";
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(text);
+                alert("تم النسخ!");
+            };
+            actionsDiv.appendChild(copyBtn);
+
+            if (text.startsWith("http://") || text.startsWith("https://")) {
+                let openBtn = document.createElement("button");
+                openBtn.className = "scan-action-btn";
+                openBtn.innerHTML = '<i class="fa-solid fa-external-link"></i>';
+                openBtn.title = "فتح الرابط";
+                openBtn.onclick = () => window.open(text, "_blank");
+                actionsDiv.appendChild(openBtn);
+            }
+            
+            itemDiv.appendChild(textDiv);
+            itemDiv.appendChild(actionsDiv);
+            scanHistoryList.appendChild(itemDiv);
+        });
+    } else {
+        scanHistorySec.style.display = "none";
+    }
+}
+
 btnStartScan.addEventListener("click", () => {
     scanResultBox.style.display = "none";
     if (!html5QrCode) {
@@ -82,6 +141,9 @@ btnStartScan.addEventListener("click", () => {
             stopQrScanner();
             scanResultBox.style.display = "block";
             scanResultText.value = decodedText;
+            
+            // حفظ النتيجة في السجل
+            saveScanHistory(decodedText);
             
             if (decodedText.startsWith("http://") || decodedText.startsWith("https://")) {
                 btnOpenScanLink.style.display = "block";
@@ -262,6 +324,32 @@ function getQRData() {
     return "";
 }
 
+// --- دالة التسمية الذكية للملفات (الجديدة) ---
+function getSmartFileName() {
+    let prefix = "QR";
+    if (currentActiveType === "section_text") {
+        prefix = "Text_Link";
+    } else if (currentActiveType === "section_wifi") {
+        let ssid = document.getElementById("wifi_ssid").value.trim();
+        prefix = ssid ? `WiFi_${ssid}` : "WiFi";
+    } else if (currentActiveType === "section_vcard") {
+        let name = document.getElementById("vcard_name").value.trim();
+        prefix = name ? `Contact_${name.replace(/\s+/g, '_')}` : "Contact";
+    } else if (currentActiveType === "section_whatsapp") {
+        prefix = "WhatsApp";
+    } else if (currentActiveType === "section_email") {
+        prefix = "Email";
+    } else if (currentActiveType === "section_sms") {
+        prefix = "SMS";
+    } else if (currentActiveType === "section_geo") {
+        prefix = "Location";
+    }
+    
+    const date = new Date();
+    const dateString = `${date.getFullYear()}${(date.getMonth()+1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+    return `${prefix}_${dateString}`;
+}
+
 // --- 9. المحرك الرئيسي: إنشاء الـ QR Code ---
 let qrcodeObject = null;
 document.getElementById("btn_generate_qr").addEventListener("click", function() {
@@ -335,39 +423,42 @@ document.getElementById("btn_generate_qr").addEventListener("click", function() 
     }, 500);
 });
 
-// --- 10. التحميل بالصيغ المتعددة ---
+// --- 10. التحميل بالصيغ المتعددة والتسمية الذكية ---
 document.getElementById("btn_download_qr").addEventListener("click", function() {
     const canvas = document.querySelector("#qrcode_container canvas");
     if (!canvas) return alert("يرجى إنشاء الكود أولاً.");
 
     let format = document.getElementById("select_qr_format").value;
+    let smartName = getSmartFileName();
 
     if(format === "pdf") {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const imgData = canvas.toDataURL("image/png");
         doc.setFont("helvetica");
-        doc.text("QR Code Document", 10, 20);
+        doc.text(`QR Code - ${smartName}`, 10, 20);
         doc.addImage(imgData, 'PNG', 50, 40, 110, 110);
-        doc.save("QRCode.pdf");
+        doc.save(`${smartName}.pdf`);
     } else {
         const imageType = `image/${format}`;
         const dataUrl = canvas.toDataURL(imageType);
         const link = document.createElement('a');
-        link.download = `QRCode.${format}`;
+        link.download = `${smartName}.${format}`;
         link.href = dataUrl;
         link.click();
     }
 });
 
-// --- 11. مشاركة الصورة عبر واتساب ---
+// --- 11. مشاركة الصورة عبر واتساب بالتسمية الذكية ---
 document.getElementById("btn_share_qr_whatsapp").addEventListener("click", async function(e) {
     e.preventDefault();
     const canvas = document.querySelector("#qrcode_container canvas");
     if (!canvas) return alert("يرجى إنشاء الكود أولاً.");
 
+    let smartName = getSmartFileName();
+
     canvas.toBlob(async function(blob) {
-        const file = new File([blob], "qrcode.png", { type: "image/png" });
+        const file = new File([blob], `${smartName}.png`, { type: "image/png" });
         const shareData = {
             title: 'QR Code',
             text: 'تفضل هذا الـ QR Code الذي قمت بإنشائه:',
@@ -391,7 +482,7 @@ document.getElementById("btn_print_qr").addEventListener("click", function() {
     window.print();
 });
 
-// --- 13. حفظ واسترجاع السجل المحلي ---
+// --- 13. حفظ واسترجاع السجل المحلي للمولد ---
 function saveToHistory() {
     const canvas = document.querySelector("#qrcode_container canvas");
     if(!canvas) return;
@@ -427,7 +518,12 @@ function loadHistory() {
         });
     }
 }
-window.onload = loadHistory;
+
+// تحميل السجلات عند فتح التطبيق
+window.onload = () => {
+    loadHistory();
+    loadScanHistory();
+};
 
 // --- 14. مشاركة رابط التطبيق العام ---
 document.getElementById("btn_share_app").addEventListener("click", async () => {
